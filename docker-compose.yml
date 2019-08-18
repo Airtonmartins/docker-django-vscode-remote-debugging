@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+  web:
+    build: .
+    command: python manage.py runserver --noreload --nothreading 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+      - "3000-3020:3000-3020"
+    environment:
+      - PYTHONUNBUFFERED=0
+      - DJANGO_DEBUGGER=True
+    depends_on:
+      - db
